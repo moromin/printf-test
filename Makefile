@@ -22,8 +22,7 @@ CC				= gcc
 GCCFLAG   		= -Wall -Wextra -Werror
 
 TEST_SRCNAME	= ft_printf_c_test.cpp ft_printf_s_test.cpp ft_printf_p_test.cpp ft_printf_d_test.cpp \
-				ft_printf_i_test.cpp ft_printf_u_test.cpp ft_printf_x_test.cpp ft_printf_X_test.cpp \
-				ft_printf_pct_test.cpp				
+				ft_printf_i_test.cpp ft_printf_u_test.cpp ft_printf_xX_test.cpp ft_printf_pct_test.cpp				
 
 # TODO
 # TEST_B_SRCNAME	= ft_lstsize_test.cpp ft_lstlast_test.cpp ft_lstadd_front_test.cpp ft_lstadd_back_test.cpp \
