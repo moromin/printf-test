@@ -4,47 +4,45 @@
 #include "gtest/gtest.h"
 
 extern "C" {
-#include "../libft.h"
+#include "../../includes/ft_printf.h"
+#include "../../includes/ft_printf_utils.h"
 #include <climits>
 }
 
-#define STRSIZE 42 
+#define STRSIZE 42
 
-#define JUDGE_EQ(name, val) \
-    EXPECT_EQ(name(val), ft_ ## name(val)); \
+#define JUDGE_EQ(op, val) \
+    testing::internal::CaptureStdout(); \
+    EXPECT_EQ(printf("%"# op"\n", val), ft_printf("%"# op"\n", val)); \
+    testing::internal::GetCapturedStdout(); \
+    testing::internal::CaptureStdout(); \
+    printf("%"# op"\n", val); \
+    lib = testing::internal::GetCapturedStdout().c_str(); \
+    testing::internal::CaptureStdout(); \
+    ft_printf("%"# op"\n", val); \
+    ft = testing::internal::GetCapturedStdout().c_str(); \
+    EXPECT_STREQ(lib, ft); \
 
-#define JUDGE_EQ_3(name, val1, val2, val3) \
-    EXPECT_EQ(name(val1, val2, val3), ft_ ## name(val1, val2, val3)); \
+    // backup = dup(1); \
+    // dup2(fd1, 1); \
+    // printf("%"# op"\n", val); \
+    // dup2(fd2, 1); \
+    // ft_printf("%"# op"\n", val); \
+    // dup2(backup, 1); \
+    // close(backup); \
+    // system("diff output1 output2");
 
-#define JUDGE_STR(name, val) \
-    EXPECT_STREQ(name(val), ft_ ## name(val));
-
-#define JUDGE_STR_2(name, val1, val2) \
-    EXPECT_STREQ(name(val1, val2), ft_ ## name(val1, val2));
-
-#define JUDGE_EQ_STR_3(name, lib, test, val1, val2) \
-    EXPECT_EQ(name(lib, val1, val2), ft_ ## name(test, val1, val2)); \
-    EXPECT_STREQ(lib, test);
-
-#define JUDGE_EQ_DEATH(name, val) \
-    EXPECT_EXIT(ft_ ## name(val), ::testing::KilledBySignal(SIGSEGV),".*"); \
-    // EXPECT_EXIT(ft_ ## name(val), ::testing::KilledBySignal(SIGSEGV),".*"); \
-
-#define JUDGE_MEMMOVE(name, str, shift, len, lib, test) \
-    strcpy(lib, str); \
-    strcpy(test, str); \
-    if (0 <= shift) { \
-		name(lib+shift, lib, len); \
-		ft_ ## name(test+shift, test, len); \
-	} \
-    else{ \
-        name(lib, lib-shift, len); \
-		ft_ ## name(test, test-shift, len);\
-	} \
-    EXPECT_STREQ(lib, test);
-
-#define JUDGE_CALLOC(name, size, byte) \
-    EXPECT_EQ(0, memcmp(name(size, byte), ft_ ## name(size, byte), size * byte)); \
+#define JUDGE_EQ_NO_ARGS(op) \
+    testing::internal::CaptureStdout(); \
+    EXPECT_EQ(printf("%"# op"\n"), ft_printf("%"# op"\n")); \
+    testing::internal::GetCapturedStdout(); \
+    testing::internal::CaptureStdout(); \
+    printf("%"# op"\n"); \
+    lib = testing::internal::GetCapturedStdout().c_str(); \
+    testing::internal::CaptureStdout(); \
+    ft_printf("%"# op"\n"); \
+    ft = testing::internal::GetCapturedStdout().c_str(); \
+    EXPECT_STREQ(lib, ft); \
 
 #define LEAKS_CONFIRM \
     testing::internal::CaptureStdout(); \
