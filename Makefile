@@ -40,17 +40,17 @@ ifeq ($(IN_GUACAMOLE),TRUE)
 endif
 
 m: mstart
-	g++ $(CFLAGS) $(TEST_SRCS) $(MAIN_PATH) $(GTEST_PATH) -I$(FT_HEADER_PATH) -L$(PRINTF_PATH) -lft
+	g++ $(CFLAGS) $(TEST_SRCS) $(MAIN_PATH) $(GTEST_PATH) -I. -L../ -lft
 	@./a.out
 	@rm -f a.out *.o
 
-b: bstart
-	g++ $(CFLAGS) $(TEST_B_SRCS) $(MAIN_PATH) $(GTEST_PATH) -I. -L$(PRINTF_PATH) -lft
-	@./a.out
-	@rm -f a.out *.o
+# b: bstart
+# 	g++ $(CFLAGS) $(TEST_B_SRCS) $(MAIN_PATH) $(GTEST_PATH) -I. -L$(PRINTF_PATH) -lft
+# 	@./a.out
+# 	@rm -f a.out *.o
 
 $(MANDATORY): mstart
-	g++ $(CFLAGS) $(TESTS_PATH)ft_printf_$@_test.cpp $(MAIN_PATH) -I$(FT_HEADER_PATH) $(GTEST_PATH) -L$(PRINTF_PATH) -lft
+	g++ $(CFLAGS) $(TESTS_PATH)ft_printf_$@_test.cpp $(MAIN_PATH) -I. $(GTEST_PATH) -L../ -lftprintf
 	@./a.out
 	@rm -f a.out *.o
 
@@ -74,10 +74,10 @@ mstart:
 # 	make bonus -C $(PRINTF_PATH)
 
 clean:
-	make clean -C $(PRINTF_PATH)
+	make clean -C ../
 	rm -f $(OBJS) $(B_OBJS)
 
 fclean: clean
-	make fclean -C $(PRINTF_PATH)
+	make fclean -C ../
 
 .PHONY: all init
