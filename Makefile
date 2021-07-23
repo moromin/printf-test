@@ -39,7 +39,7 @@ ifeq ($(IN_GUACAMOLE),TRUE)
 endif
 
 m: mstart
-	g++ $(CFLAGS) $(TEST_SRCS) $(MAIN_PATH) $(GTEST_PATH) -I. -L../ -lft
+	g++ $(CFLAGS) $(TEST_SRCS) $(MAIN_PATH) $(GTEST_PATH) -I. -L../ -lftprintf
 	@./a.out
 	@rm -f a.out *.o
 
